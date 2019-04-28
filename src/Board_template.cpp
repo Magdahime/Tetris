@@ -1,5 +1,6 @@
 #include "Main.hpp"
 #include "Board_template.hpp"
+#include "Tblock.hpp"
 bool TBoard::check(int a, int b)
 {
     if(a>x || b>y)
@@ -21,6 +22,7 @@ bool TBoard::place_on_board(TBlock block, char sign)
         Board[a][b]=sign;
         
     }
+    return true;
 }
 void TBoard::show_me()
 {

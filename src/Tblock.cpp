@@ -1,10 +1,5 @@
 #include "Main.hpp"
 #include "Tblock.hpp"
-struct TBlock::Impl{
-    static int number; 
-    int squares;
-    static void increase_number();
-};
 int TBlock::how_many_squares()
 {
 return pImpl->squares;
