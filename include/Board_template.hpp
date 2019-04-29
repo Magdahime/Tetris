@@ -1,8 +1,8 @@
-class TBlock;
 #ifndef BOARD_TEMPLATE
 #define BOARD_TEMPLATE
 #include "Main.hpp"
 #include "Tblock.hpp"
+class TBlock;
 class TBoard{
 private: 
     int left_space;
@@ -10,7 +10,7 @@ private:
     int y;
 std::vector<std::vector<char>> Board;
 public:
-    TBoard(int a,int b): left_space(a*b), x(a), y(b){
+    TBoard(int a = 10,int b = 10): left_space(a*b), x(a), y(b){
         for(int i=0; i<x;i++){
             Board[i].resize(b,'0');
         }
