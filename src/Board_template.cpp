@@ -10,50 +10,56 @@ bool TBoard::check(int a, int b)
     }
 return false;
 }
+bool TBoard::check_around(int a, int b)
+{
+    if(check(a+1,b)&& check(a-1,b) && check(a,b+1) &&check(a,b-1))
+        return true;
+    return false;
+}
+
 bool TBoard::place_on_board(int squares, char sign)
 {
     if(squares>left_space){
         std::cout<<"This block is to big to be placed on this board!"<<std::endl;
         return false;
     }
+    std::cout<<"Hi! This is my sign -- "<<sign<<std::endl;
     int a = choose_place(x);
     int b = choose_place(y);
-    if(place_square(a,b,squares,sign)){
+    int i=1;
+    if(place_square(a,b,squares,sign,i)){
     left_space-=squares;
     return true;   
-    }
+    }else
     std::cout<<"Unable to place a block"<<std::endl;
     return false;
 }
-bool TBoard::place_square(int a, int b, int number, char sign)
+bool TBoard::place_square(int a, int b, int number, char sign,int number_of_attempts)
 {
-    std::cout<<"Hi! This is my sign -- "<<sign<<std::endl;
-    if(check(a,b)){
+    std::cout<<"This is my "<<number_of_attempts<<" try."<<std::endl;
+    if(check_around(a,b)){
         Board[a][b]=sign;
         for(int i =0; i<number-1;i++){
             if(check(a,b+1)){
                 Board[a][b+1]=sign;
                 b++;
-                continue;
             }else if(check(a+1,b)){
                 Board[a+1][b]=sign;
                 a++;
-                continue;
             }else if(check(a,b-1)){
                 Board[a][b-1]=sign;
                 b--;
-                continue;
             }else if(check(a-1,b)){
                 Board[a-1][b]=sign;
                 a--;
-                continue;
             } else 
                 return false;
         }
     }else {
         a=choose_place(x);
         b=choose_place(y);
-        place_square(a,b,number,sign);
+        number_of_attempts++;
+        place_square(a,b,number,sign,number_of_attempts);
     }
     return true;
 }
@@ -76,7 +82,7 @@ int TBoard::choose_place(int z)
     int a =rand();
     int b=rand();
     long long int coordinate = std::rand();
-    coordinate+=a*b+a+b;
+    coordinate-=a*b+a+b;
     coordinate%=z;
     return coordinate;
 }

@@ -3,6 +3,7 @@
 #include "Main.hpp"
 #include "Board_template.hpp"
 class TBlock{
+friend class TInterface;
 private:
     struct Impl;
     std::unique_ptr<Impl> pImpl;

@@ -1,6 +1,7 @@
 #include "Main.hpp"
 #include "Board_template.hpp"
 #include "Tblock.hpp"
+#include "Interface.hpp"
 #ifndef user
 int TBlock::Impl::number=0;
 void test1(void);
@@ -8,7 +9,7 @@ void test2(void);
 void test3(void);
 void test4(void);
 int main(){
-    srand(time(NULL));
+        srand(time(NULL));
     test1();
     test2();
     test3();
