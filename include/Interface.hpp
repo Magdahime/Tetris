@@ -15,7 +15,6 @@ private:
     void set_dimension(long long int wid, long long int len);
 public:
     void clrscrs(void);
-    void make_new_board(TBoard** board_pointer);
     void place_on_board(TBoard* board_pointer);
     int get_dimension();
     void user_interface();

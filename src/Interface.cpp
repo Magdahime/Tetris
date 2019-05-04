@@ -4,7 +4,7 @@
 #include "Interface.hpp"
 void TInterface::user_interface()
 {
-    TBoard Board1;
+    TBoard *Board1=NULL;
     std::string frame(MAX_LINE,'*');
 while(true){
     std::cout.width(MAX_LINE);
@@ -26,10 +26,13 @@ while(true){
     switch(ans){
         case(1):{
             clrscrs();
-            std::cout<<"You will now enter the data about the board."<<std::endl;
-            std::cout<<"Choose the width, then choose the length."<<std::endl;
-            set_dimension(get_dimension(),get_dimension());
-            Board1 = TBoard(width,length);
+            if(Board1==NULL){
+            make_new_board(&Board1);
+            }else{
+                std::cout<<"You already have one board! Do you want to create another one?[Y/N]"<<std::endl;
+                if(get_ans())
+                    make_new_board(&Board1);
+            }
            break; 
         }
         case(2):{
@@ -51,17 +54,26 @@ while(true){
         }
         case(3):{
             clrscrs();
+            if(Board1==NULL){
+                std::cout<<"There is no board!"<<std::endl<<"HINT: Enter the data about the board first."<<std::endl;
+            }else
+            place_on_board(Board1);
             break;
         }
         case(4):{
             clrscrs();
-            Board1.show_me();
+            if(Board1==NULL){
+                std::cout<<"There is no board!"<<std::endl<<"HINT: Enter the data about the board first."<<std::endl;
+            }else{
+            Board1->show_me();
             std::cout<<"Please press any key to continue..."<<std::endl;
             getchar();
+            }
             break;
         }
         case(5):{
             clrscrs();
+            delete Board1;
             std::cout<<"Goodbye."<<std::endl;
             exit(1);
         }
@@ -72,6 +84,18 @@ while(true){
     }
 }
 }
+void TInterface::make_new_board(TBoard** board_pointer)
+{            
+    std::cout<<"You will now enter the data about the board."<<std::endl;
+    std::cout<<"Choose the width, then choose the length."<<std::endl;
+    std::cout<<"Width: "<<std::endl;
+    long long int dim1=get_dimension();
+    std::cout<<"Length: "<<std::endl;
+    long long int dim2=get_dimension();
+    set_dimension(dim1,dim2);
+    *board_pointer = new TBoard(width,length);
+}
+
 bool TInterface::get_ans()
 {
 char c;
@@ -88,10 +112,13 @@ return get_ans();
 int TInterface::get_dimension()
 {
     long long int dimension=0;
-    while(!std::cin>>dimension){
+    std::cin>>dimension;
+    std::cin.ignore(TRASH_MAX,'\n');
+    while(!std::cin){
     std::cin.clear();
     std::cin.ignore(TRASH_MAX,'\n');
-    std::cout << "Woah bad data, try again";
+    std::cout << "Woah bad data, try again"<<std::endl;
+    std::cin>>dimension;
     }
     return dimension;
 }
@@ -118,4 +145,20 @@ int TInterface::get_int()
         return liczba1;
     return 1;
         
+}
+void TInterface::place_on_board(TBoard* board_pointer)
+{
+    char signs[] ={'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','R','S','T','U','W','X','Y','Z'};
+    int i=0;
+    if(board_pointer->place_on_board(Blocks[i],signs[i])){
+        i++;
+        board_pointer->place_on_board(Blocks[i],signs[i]);
+    }else{
+        board_pointer->clean_board(signs[i]);
+        i--;
+        if(i<0){
+            std::cout<<"Unable to place the blocks."<<std::endl;
+        }else
+        board_pointer->place_on_board(Blocks[i],signs[i]);
+    }
 }

@@ -22,3 +22,14 @@ clean:
 	rm -f $(BUILD)/*.o
 	rm -f $(BIN)/PROGRAM
 	rm -f $(BIN)/TEST
+	rm -f $(BIN)/PROGRAM
+
+PROGRAM: $(BUILD)/Mainu.o $(BUILD)/Tblock.o $(BUILD)/Board_template.o $(BUILD)/Interface.o
+	$(CC) $(CFLAGS) $(BUILD)/Mainu.o $(BUILD)/Tblock.o $(BUILD)/Board_template.o $(BUILD)/Interface.o -o $(BIN)/PROGRAM
+
+$(BUILD)/Interface.o: $(SRC)/Interface.cpp $(INCLUDE)/Main.hpp $(INCLUDE)/Tblock.hpp $(INCLUDE)/Interface.hpp $(INCLUDE)/Board_template.hpp
+	$(CC) $(CFLAGS) -c $(SRC)/Interface.cpp -o $(BUILD)/Interface.o	
+
+$(BUILD)/Mainu.o:$(SRC)/Main.cpp $(INCLUDE)/Main.hpp $(INCLUDE)/Board_template.hpp $(INCLUDE)/Tblock.hpp
+	$(CC) -Duser=1 $(CFLAGS) -c $(SRC)/Main.cpp -o $(BUILD)/Mainu.o
+

@@ -1,6 +1,15 @@
 #include "Main.hpp"
 #include "Board_template.hpp"
 #include "Tblock.hpp"
+int TBoard::tell_length()
+{
+    return y;
+}
+int TBoard::tell_width()
+{
+    return x;
+}
+
 bool TBoard::check(int a, int b)
 {
     if(a>x || a<0 || b<0 || b>y)
@@ -17,9 +26,9 @@ bool TBoard::check_around(int a, int b)
     return false;
 }
 
-bool TBoard::place_on_board(int squares, char sign)
+bool TBoard::place_on_board(TBlock& block1, char sign)
 {
-    if(squares>left_space){
+    if(block1.how_many_squares()>left_space){
         std::cout<<"This block is to big to be placed on this board!"<<std::endl;
         return false;
     }
@@ -27,8 +36,8 @@ bool TBoard::place_on_board(int squares, char sign)
     int a = choose_place(x);
     int b = choose_place(y);
     int i=1;
-    if(place_square(a,b,squares,sign,i)){
-    left_space-=squares;
+    if(place_square(a,b,block1.how_many_squares(),sign,i)){
+    left_space-=block1.how_many_squares();
     return true;   
     }else
     std::cout<<"Unable to place a block"<<std::endl;
@@ -102,4 +111,12 @@ void TBoard::make_frame()
     for(int i=0; i<x+2; i++)
         Board[i][y+1]='|';
 }
-
+void TBoard::clean_board(char sign)
+{
+    for(int i=0; i<tell_width();i++){
+        for(int j=0;j<tell_length();j++){
+            if(Board[i][j]==sign)
+               Board[i][j]='0';
+        }
+    }
+}
