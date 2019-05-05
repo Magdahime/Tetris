@@ -6,8 +6,8 @@ SRC = src
 BUILD = build
 BIN = bin
 
-$(BIN)/TEST: $(BUILD)/Main.o $(BUILD)/Tblock.o $(BUILD)/Board_template.o
-	$(CC) $(CFLAGS) $(BUILD)/Main.o $(BUILD)/Tblock.o $(BUILD)/Board_template.o -o $(BIN)/TEST
+$(BIN)/TEST: $(BUILD)/Main.o $(BUILD)/Tblock.o $(BUILD)/Board_template.o $(BUILD)/Interface.o
+	$(CC) $(CFLAGS) $(BUILD)/Main.o $(BUILD)/Tblock.o $(BUILD)/Board_template.o $(BUILD)/Interface.o -o $(BIN)/TEST
 
 $(BUILD)/Main.o: $(SRC)/Main.cpp $(INCLUDE)/Main.hpp $(INCLUDE)/Board_template.hpp $(INCLUDE)/Tblock.hpp
 	$(CC) $(CFLAGS) -c $(SRC)/Main.cpp -o $(BUILD)/Main.o

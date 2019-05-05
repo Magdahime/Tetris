@@ -55,18 +55,11 @@ while(true){
             clrscrs();
             if(Board1==NULL){
                 std::cout<<"There is no board!"<<std::endl<<"HINT: Enter the data about the board first."<<std::endl;
-            }else{
-                std::cout<<"Actual size of manual "<<manual.size()<<std::endl;
-                std::cout<<"And his content"<<std::endl;
-                for(long unsigned int i=0;i<manual.size();i++)
-                    for(long unsigned int j=0;j<manual[i].size();j++)
-                        std::cout<<manual[i][j]<<std::endl;
+            }else if(manual.size()==0){
+                 std::cout<<"There is no blocks!"<<std::endl<<"HINT: Enter the data about the blocks first."<<std::endl;
+            }else {
                 create_all_blocks();
-                std::cout<<"Actual size of Blocks "<<Blocks.size()<<std::endl;
-                std::cout<<"And his content"<<std::endl;
-                for(long unsigned int i=0;i<Blocks.size();i++)
-                std::cout<<Blocks[i].how_many_squares()<<std::endl;
-                place_on_board(Board1);
+                place_on_board(Board1,1);
             }
             break;
         }
@@ -185,19 +178,25 @@ int TInterface::get_int()
     return 1;
         
 }
-void TInterface::place_on_board(TBoard* board_pointer)
+void TInterface::place_on_board(TBoard* board_pointer, long unsigned int i)
 {
-    char signs[] ={'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','R','S','T','U','W','X','Y','Z'};
-    int i=0;
-    if(board_pointer->place_on_board(Blocks[i],signs[i])){
+    if(board_pointer->place_on_board(Blocks[i-1],i)){
+        board_pointer->show_me();
         i++;
-        board_pointer->place_on_board(Blocks[i],signs[i]);
+        if(i-1<Blocks.size())
+        place_on_board(board_pointer,i);
+        else
+            std::cout<<"End."<<std::endl;
     }else{
-        board_pointer->clean_board(signs[i]);
+        board_pointer->show_me();
+        board_pointer->clean_board(i);
+        board_pointer->show_me();
         i--;
-        if(i<0){
+        board_pointer->clean_board(i);
+        board_pointer->show_me();
+        if(i<=0){
             std::cout<<"Unable to place the blocks."<<std::endl;
         }else
-        board_pointer->place_on_board(Blocks[i],signs[i]);
+        place_on_board(board_pointer,i);
     }
 }

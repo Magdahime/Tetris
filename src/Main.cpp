@@ -10,9 +10,10 @@ void test3(void);
 void test4(void);
 int main(){
         srand(time(NULL));
-    test1();
-    test2();
-    test3();
+    //test1();
+    //test2();
+    //test3();
+    test4();
     return 0;
 };
 void test1(){
@@ -42,11 +43,11 @@ void test2()
     std::cout<<"That's how Board1 looks like before placing an object : "<<std::endl;
     Board1.show_me();
     std::cout<<"How much space has Board1 before placing an object: "<<Board1.how_much_space_left()<<std::endl;
-    Board1.place_on_board(block1,'A');
+    Board1.place_on_board(block1,1);
     std::cout<<"How much space has Board1 after placing an object1: "<<Board1.how_much_space_left()<<std::endl;
     std::cout<<"That's how Board1 looks like after placing object1 : "<<std::endl;
     Board1.show_me();
-    Board1.place_on_board(block2,'C');
+    Board1.place_on_board(block2,2);
     std::cout<<"How much space has Board1 after placing an object2: "<<Board1.how_much_space_left()<<std::endl;
     std::cout<<"That's how Board1 looks like after placing object2 : "<<std::endl;
     Board1.show_me();
@@ -54,11 +55,11 @@ void test2()
     std::cout<<"That's how Board2 looks like before placing an object : "<<std::endl;
     Board2.show_me();
     std::cout<<"How much space has Board2 before placing an object: "<<Board2.how_much_space_left()<<std::endl;
-    Board2.place_on_board(block1,'A');
+    Board2.place_on_board(block1,1);
     std::cout<<"How much space has Board2 after placing an object1: "<<Board2.how_much_space_left()<<std::endl;
     std::cout<<"That's how Board2 looks like after placing object1 : "<<std::endl;
     Board2.show_me();
-    Board2.place_on_board(block2,'C');
+    Board2.place_on_board(block2,2);
     std::cout<<"How much space has Board1 after placing an object2: "<<Board2.how_much_space_left()<<std::endl;
     std::cout<<"That's how Board2 looks like after placing object2 : "<<std::endl;
     Board2.show_me();
@@ -75,20 +76,34 @@ void test3()
     TBlock block4(39);
     TBlock block5(60);
     std::cout<<"Start placing blocks. "<<std::endl;
-    test_board.place_on_board(block1,'A');
+    test_board.place_on_board(block1,1);
     test_board.show_me();
-    test_board.place_on_board(block2,'B');
+    test_board.place_on_board(block2,2);
     test_board.show_me();
-    test_board.place_on_board(block3,'C');
+    test_board.place_on_board(block3,3);
     test_board.show_me();
-    test_board.place_on_board(block4,'D');
+    test_board.place_on_board(block4,4);
     test_board.show_me();
-    test_board.place_on_board(block5,'E');
+    test_board.place_on_board(block5,5);
     test_board.show_me();
     std::cout<<"End of the test. Expecting solution: Possible."<<std::endl<<stars;
     
 }
 
+void test4()
+{
+    std::string stars(30, '*');
+    std::cout<<stars<<std::endl<<"Start test 4: Testing place algorithm."<<std::endl;
+    TBoard* board1;
+    board1=new TBoard(10,10);
+    TInterface interface;
+    interface.make_new_manual();
+    interface.create_all_blocks();
+    interface.place_on_board(board1,1);
+    board1->show_me();
+    delete board1;
+    std::cout<<"End of the test. Expecting solution: Possible."<<std::endl<<stars;
+}
 
 #else
 int TBlock::Impl::number=0;
