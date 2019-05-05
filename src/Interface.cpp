@@ -150,6 +150,9 @@ int TInterface::get_dimension()
     std::cin.clear();
     std::cin.ignore(TRASH_MAX,'\n');
     std::cout << "Woah bad data, try again"<<std::endl;
+    if(dimension<=0){
+        std::cout<<" Woah bad data, try again"<<std::endl;
+    }
     std::cin>>dimension;
     }
     return dimension;

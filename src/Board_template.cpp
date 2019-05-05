@@ -1,6 +1,7 @@
 #include "Main.hpp"
 #include "Board_template.hpp"
 #include "Tblock.hpp"
+#include <chrono>
 int TBoard::tell_length()
 {
     return y;
@@ -12,7 +13,7 @@ int TBoard::tell_width()
 
 bool TBoard::check(int a, int b)
 {
-    if(a>x || a<1 || b<1 || b>y)
+    if(a>x || a<=0 || b<=0 || b>y)
         return false;
     if(Board[a][b]==0){
         return true;  
@@ -21,7 +22,7 @@ return false;
 }
 bool TBoard::check_around(int a, int b)
 {
-    if(check(a+1,b)&& check(a-1,b) && check(a,b+1) &&check(a,b-1))
+    if(check(a,b) && (check(a+1,b)|| check(a-1,b) || check(a,b+1) ||check(a,b-1)))
         return true;
     return false;
 }
@@ -32,8 +33,8 @@ bool TBoard::place_on_board(TBlock& block1, int sign)
         std::cout<<"This block is to big to be placed on this board!"<<std::endl;
         return false;
     }
-    int a = choose_place(x);
-    int b = choose_place(y);
+    int a =choose_place(x);
+    int b =choose_place(y);
     int i=1;
     int result =place_square(a,b,block1.how_many_squares(),sign,i);
     while(result ==ERROR_SPAWN){
@@ -95,13 +96,9 @@ TBoard::~TBoard()
 {
 }
 int TBoard::choose_place(int z)
-{ 
-    int a =rand();
-    int b=rand();
+{
     long long int coordinate = std::rand();
-    coordinate-=a*b+a+b;
-    coordinate%=z;
-    return coordinate;
+    return coordinate%z+1;
 }
 int TBoard::how_much_space_left()
 {
