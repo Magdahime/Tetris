@@ -31,24 +31,23 @@ while(true){
             }else{
                 std::cout<<"You already have one board! Do you want to create another one?[Y/N]"<<std::endl;
                 if(get_ans())
+                {
+                    delete Board1;
                     make_new_board(&Board1);
+                }
             }
            break; 
         }
         case(2):{
             clrscrs();
-            while(true){
-                std::vector<int> additional_vect;
-                std::cout<<"How much squares you want your block to have?"<<std::endl;
-                long long int liczba1 = get_int();
-                additional_vect.push_back(liczba1);
-                std::cout<<"How much of this blocks you want to have?"<<std::endl;
-                long long int liczba2 = get_int();
-                additional_vect.push_back(liczba2);
-                manual.push_back(additional_vect);
-                std::cout<<"Do you want to continue? Y/N"<<std::endl;
-                std::cout<<"___";
-                if(!get_ans()) break;
+            if(manual.size()==0){
+            make_new_manual();
+            }else{
+                std::cout<<"You have already entered data about the blocks. Do you want to do it once again? [Y/N]"<<std::endl;
+                if(get_ans()){
+                    manual.clear();
+                    make_new_manual();
+                }
             }
             break;
         }
@@ -56,8 +55,19 @@ while(true){
             clrscrs();
             if(Board1==NULL){
                 std::cout<<"There is no board!"<<std::endl<<"HINT: Enter the data about the board first."<<std::endl;
-            }else
-            place_on_board(Board1);
+            }else{
+                std::cout<<"Actual size of manual "<<manual.size()<<std::endl;
+                std::cout<<"And his content"<<std::endl;
+                for(long unsigned int i=0;i<manual.size();i++)
+                    for(long unsigned int j=0;j<manual[i].size();j++)
+                        std::cout<<manual[i][j]<<std::endl;
+                create_all_blocks();
+                std::cout<<"Actual size of Blocks "<<Blocks.size()<<std::endl;
+                std::cout<<"And his content"<<std::endl;
+                for(long unsigned int i=0;i<Blocks.size();i++)
+                std::cout<<Blocks[i].how_many_squares()<<std::endl;
+                place_on_board(Board1);
+            }
             break;
         }
         case(4):{
@@ -84,6 +94,31 @@ while(true){
     }
 }
 }
+void TInterface::create_all_blocks()
+{
+    //Za pomocą wektora manual tworzy wszystkie potrzebne bloki i umieszcza je w wektorze Blocks
+    for(long unsigned int i=0; i<manual.size();i++)
+        for(int j=0; j<manual[i][1];j++){
+            Blocks.push_back(TBlock(manual[i][0]));
+        }
+}
+
+void TInterface::make_new_manual()
+{
+     while(true){
+                std::vector<int> additional_vect;
+                std::cout<<"How much squares you want your block to have?"<<std::endl;
+                long long int liczba1 = get_int();
+                additional_vect.push_back(liczba1);
+                std::cout<<"How much of this blocks you want to have?"<<std::endl;
+                long long int liczba2 = get_int();
+                additional_vect.push_back(liczba2);
+                manual.push_back(additional_vect);
+                std::cout<<"Do you want to continue? [Y/N]"<<std::endl;
+                if(!get_ans()) break;
+            }
+}
+
 void TInterface::make_new_board(TBoard** board_pointer)
 {            
     std::cout<<"You will now enter the data about the board."<<std::endl;
@@ -104,9 +139,13 @@ if(c=='Y'|| c=='y'){
     return true;
 }else if(c=='N' || c=='n')
     return false;
-else 
+else {
     std::cout<<"Error, please try once again."<<std::endl;
-return get_ans();
+    std::cin.clear();
+    std::cin.ignore(TRASH_MAX,'\n');
+    return get_ans();
+}
+return false;
 }
 
 int TInterface::get_dimension()

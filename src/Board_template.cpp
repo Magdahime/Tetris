@@ -32,7 +32,6 @@ bool TBoard::place_on_board(TBlock& block1, char sign)
         std::cout<<"This block is to big to be placed on this board!"<<std::endl;
         return false;
     }
-    std::cout<<"Hi! This is my sign -- "<<sign<<std::endl;
     int a = choose_place(x);
     int b = choose_place(y);
     int i=1;

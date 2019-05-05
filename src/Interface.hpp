@@ -16,6 +16,8 @@ private:
 public:
     void clrscrs(void);
     void make_new_board(TBoard** board_pointer);
+    void make_new_manual();
+    void create_all_blocks();
     void place_on_board(TBoard* board_pointer);
     int get_dimension();
     void user_interface();
