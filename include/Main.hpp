@@ -6,6 +6,10 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <chrono>
-#include <random>
+constexpr int MAX_LINE={120};
+constexpr int TRASH_MAX = {1000};
+constexpr int SPACE_FOR_FRAME={2};
+constexpr int ERROR_SPAWN={1};
+constexpr int OK={0};
+constexpr int ERROR_PLACEMENT={2};
 #endif

@@ -1,15 +1,7 @@
 #include "Main.hpp"
-#include "Board_template.hpp"
+#include "TBoard.hpp"
 #include "Tblock.hpp"
-#include <chrono>
-int TBoard::tell_length()
-{
-    return y;
-}
-int TBoard::tell_width()
-{
-    return x;
-}
+#include "TBoard_template.hpp"
 
 bool TBoard::check(int a, int b)
 {
@@ -80,52 +72,8 @@ int TBoard::place_square(int a, int b, int number, char sign,int number_of_attem
     }
     return ERROR_SPAWN;
 }
-
-void TBoard::show_me()
-{
-    for(int i=0;i<x+2;i++){
-        for(int j=0; j<y+2;j++){
-            std::cout.width(3);
-            std::cout<<Board[i][j];
-        }
-        std::cout<<std::endl;
-    }
-    std::cout<<std::endl;
-}
-TBoard::~TBoard()
-{
-}
 int TBoard::choose_place(int z)
 {
     long long int coordinate = std::rand();
     return coordinate%z+1;
-}
-int TBoard::how_much_space_left()
-{
-    return left_space;
-}
-
-void TBoard::make_frame()
-{
-    for(int i=0; i<y+2;i++)
-        Board[0][i]=0;
-    for(int i=0; i<y+2; i++)
-        Board[x+1][i]=0;
-    for(int i=0; i<x+2; i++)
-        Board[i][0]=0;
-    for(int i=0; i<x+2; i++)
-        Board[i][y+1]=0;
-}
-void TBoard::clean_board(unsigned int sign)
-{
-    int add=0;
-    for(int i=0; i<tell_width()+1;i++){
-        for(int j=0;j<tell_length()+1;j++){
-            if(Board[i][j]==sign){
-               Board[i][j]=0;
-               add++;
-            }
-        }
-    }
-    left_space+=add;
 }

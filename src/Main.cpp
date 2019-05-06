@@ -1,20 +1,23 @@
 #include "Main.hpp"
-#include "Board_template.hpp"
+#include "TBoard.hpp"
 #include "Tblock.hpp"
 #include "Interface.hpp"
+#include "TBoard_template.hpp"
 #ifndef user
 int TBlock::Impl::number=0;
 void test1(void);
 void test2(void);
 void test3(void);
 void test4(void);
+void test5(void);
 int main(){
         srand(time(NULL));
-    //test1();
-    //test2();
-    //test3();
+    test1();
+    test2();
+    test3();
     test4();
-    return 0;
+    //test5();
+        return 0;
 };
 void test1(){
     std::string stars(30, '*');
@@ -102,7 +105,17 @@ void test4()
     interface.place_on_board(board1,1);
     board1->show_me();
     delete board1;
-    std::cout<<"End of the test. Expecting solution: Possible."<<std::endl<<stars;
+    std::cout<<"End of the test."<<std::endl<<stars;
+}
+void test5()
+{
+    std::string stars(30, '*');
+    std::cout<<stars<<std::endl<<"Start test 4: Testing board template."<<std::endl;
+    Boardtemp<int> board;
+    board.show_me();
+    Boardtemp<double> boarddouble;
+    boarddouble.show_me();
+    std::cout<<"End of the test."<<std::endl<<stars;
 }
 
 #else
